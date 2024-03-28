@@ -2,6 +2,7 @@ from PIL import Image
 import numpy as np
 from fourier import *
 import matplotlib.pyplot as plt
+from desmos import get_function_from_file
 
 THRESHOLD = 100
 
@@ -22,9 +23,10 @@ def cast_image_into_y_coordinates(image):
     
     return np.array(y) 
 
-def export_to_file(path_to_file, a_n, b_n, a_o):
+def export_to_file(path_to_file, a_n, b_n, a_o, p):
     with open(path_to_file, 'w') as f: 
         f.write(f"{a_o}\n")
+        f.write(f"{p}\n")
         for i in range(len(a_n)):
             if i == len(a_n) - 1:
                 f.write(f"{a_n[i]}|{b_n[i]}")
@@ -59,7 +61,8 @@ if __name__ == "__main__":
     plt.ylabel("y")
     plt.title("Preview of Graphs")
     plt.legend()
-
-    export_to_file("waves.txt", a_n, b_n, a_o)
-
     plt.show()
+
+    # export and print data
+    export_to_file("waves.txt", a_n, b_n, a_o, period)
+    print(get_function_from_file("waves.txt"))
